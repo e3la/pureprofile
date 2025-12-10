@@ -1,0 +1,183 @@
+
+
+/* =========================================
+   1. Global Variables & Reset
+   ========================================= */
+:root {
+    --primary: #003366;  /* Deep Blue */
+    --accent: #dca205;   /* Gold/Yellow */
+    --bg-color: #f4f6f9;
+    --border-color: #dee2e6;
+    --success-bg: #d1e7dd;
+    --success-text: #0f5132;
+    --warning-bg: #fff3cd;
+    --warning-text: #664d03;
+}
+
+body {
+    background-color: var(--bg-color);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    margin: 0;
+    padding-bottom: 50px;
+}
+
+/* Utilities */
+.hidden { display: none !important; }
+.page-section { padding-top: 10px; animation: fadeIn 0.3s ease-in-out; }
+.fade-in { animation: fadeIn 0.5s ease-in-out; }
+
+/* Image Preview Fix */
+#p_PhotoPreview {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+#p_PhotoPreview.hidden {
+    display: none !important;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* =========================================
+   2. Navigation
+   ========================================= */
+.navbar { box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+.nav-link { color: rgba(255, 255, 255, 0.8) !important; cursor: pointer; transition: 0.2s; }
+.nav-link:hover { color: #fff !important; }
+
+/* =========================================
+   3. Cards & Inputs
+   ========================================= */
+.card { border: none; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+.dashboard-card { background: #fff; border-radius: 8px; padding: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+
+/* Workflow Selection Buttons */
+.choice-btn { transition: transform 0.2s; }
+.choice-btn:hover { transform: translateY(-3px); }
+
+.step-number {
+    background: var(--primary); color: white;
+    width: 30px; height: 30px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-weight: bold; margin-right: 10px;
+}
+
+#statusArea { background: white; padding: 15px; border-radius: 6px; border: 1px solid #dee2e6; }
+
+/* =========================================
+   4. Drag & Drop Zones
+   ========================================= */
+.drop-zone {
+    border: 2px dashed #ccc;
+    padding: 20px;
+    text-align: center;
+    background: #fff;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    cursor: pointer; 
+    margin-bottom: 15px;
+}
+.drop-zone:hover, .drop-zone.dragover {
+    border-color: var(--primary);
+    background: #e9ecef;
+}
+.drop-zone.drop-success {
+    border-color: #28a745;
+    background-color: #f0fff4;
+    cursor: default;
+}
+.drop-zone p { margin: 0; color: #666; pointer-events: none; }
+
+/* =========================================
+   5. Search Results (Autocomplete)
+   ========================================= */
+.search-container { position: relative; }
+
+#searchResults { 
+    position: absolute; 
+    top: 100%; left: 0; width: 100%; 
+    max-height: 250px; 
+    overflow-y: auto; 
+    background: white; 
+    border: 1px solid var(--border-color); 
+    z-index: 1050; 
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border-radius: 0 0 6px 6px;
+}
+.search-item { padding: 10px 15px; border-bottom: 1px solid #eee; cursor: pointer; transition: 0.1s; }
+.search-item:hover { background: #f0f8ff; color: var(--primary); }
+
+/* =========================================
+   6. Affiliation Grid
+   ========================================= */
+.aff-grid-header {
+    display: grid; 
+    grid-template-columns: 3fr 3fr 2fr 2fr 40px; 
+    gap: 10px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: #666;
+    margin-bottom: 8px;
+    padding: 0 10px;
+}
+.aff-row { 
+    display: grid; 
+    grid-template-columns: 3fr 3fr 2fr 2fr 40px; 
+    gap: 10px; 
+    margin-bottom: 8px; 
+    align-items: center; 
+    background: #fff; 
+    padding: 10px; 
+    border: 1px solid #eee; 
+    border-radius: 6px;
+    position: relative; /* Context for dropdowns */
+}
+.aff-row:hover { border-color: #ccc; background-color: #fafafa; }
+
+.aff-row.warning-bg {
+    background-color: #fff3cd !important;
+    border: 1px solid #ffeeba !important;
+}
+
+/* GENERIC CUSTOM DROPDOWN STYLES */
+.custom-dropdown-wrapper {
+    position: relative;
+}
+.custom-dropdown-list {
+    position: absolute;
+    top: 100%; left: 0; right: 0;
+    max-height: 250px;
+    overflow-y: auto;
+    background: white;
+    border: 1px solid #003366;
+    border-top: none;
+    z-index: 9999;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    display: none; /* Toggled via JS */
+    border-radius: 0 0 4px 4px;
+}
+.custom-dropdown-header {
+    background: #f8f9fa;
+    color: #666;
+    font-size: 0.75rem;
+    font-weight: bold;
+    padding: 4px 10px;
+    border-bottom: 1px solid #eee;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.custom-dropdown-item {
+    padding: 6px 10px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    border-bottom: 1px solid #f1f1f1;
+}
+.custom-dropdown-item:last-child { border-bottom: none; }
+.custom-dropdown-item:hover {
+    background-color: #eef5ff;
+    color: #003366;
+}
