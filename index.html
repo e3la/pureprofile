@@ -127,7 +127,7 @@
             </div>
         </div>
 
-        <!-- Editor Forms -->
+ <!-- Editor Forms -->
         <div class="row">
             <!-- Details Form -->
             <div class="col-lg-5 mb-3">
@@ -158,16 +158,20 @@
                     
                     <label class="small fw-bold">Email (Username) *</label><input type="email" id="p_Email" class="form-control mb-2" placeholder="email@university.edu">
                     
+                    <!-- Post Nominals & Visibility Row -->
                     <div class="row g-2 mb-2">
-                    <div class="col-12"><label class="small text-muted">Post Nominals</label><input type="text" id="p_PostNominals" class="form-control"></div>
-                    </div>
+                        <div class="col-6"><label class="small text-muted">Post Nominals</label><input type="text" id="p_PostNominals" class="form-control"></div>
+                        <div class="col-6">                
+                            <label class="small text-muted">Visibility</label>
+                            <select id="p_Visibility" class="form-select mb-2">
+                                <option value="public" selected>public</option>
+                                <option value="restricted">restricted</option>
+                            </select>
+                        </div>
+                    </div> 
+                    <!-- Removed the extra </div> that was here -->
 
-                    <label class="small text-muted">Visibility</label>
-                    <select id="p_Visibility" class="form-select mb-2">
-                        <option value="public" selected>public</option>
-                        <option value="restricted">restricted</option>
-                    </select>
-
+                    <!-- Photo Card -->
                     <div class="card bg-light p-2 mb-3 border">
                         <div class="d-flex justify-content-between">
                             <label class="small fw-bold">Profile Photo (&lt; 1MB)</label>
@@ -179,8 +183,9 @@
                         </div>
                         <input type="file" id="p_PhotoInput" class="form-control form-control-sm" accept=".jpg,.jpeg,.png">
                     </div>
-                </div>
-            </div>
+
+                </div> <!-- Closes personDetailsCard -->
+            </div> <!-- Closes col-lg-5 -->
 
             <!-- Affiliations Grid -->
             <div class="col-lg-7 mb-3">
@@ -188,9 +193,6 @@
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h5 class="m-0 text-primary">Affiliations</h5>
                         <button class="btn btn-sm btn-secondary" onclick="addAffiliationRow()">+ Add Row</button>
-                    </div>
-                    <div class="aff-grid-header">
-                        <span>Organisation</span><span>Job Title</span><span>Employed As</span><span>Start Date</span><span></span>
                     </div>
                     <div id="affRows" style="min-height: 100px;"></div>
                     <div class="mt-auto pt-3 border-top">
@@ -221,8 +223,14 @@
 <script src="xlsx.full.min.js"></script>
 <script src="jszip.min.js"></script>
 <script src="FileSaver.min.js"></script>
-<script src="script.js"></script>
-<script src="people-script.js"></script>
+<script src="globals.js"></script>
+<script src="utils.js"></script>
+<script src="file-loader.js"></script>
+<script src="file-exporter.js"></script>
+<script src="form-logic.js"></script>
+<script src="main.js"></script>
+
+
 
 </body>
 </html>
