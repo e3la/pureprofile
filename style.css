@@ -22,11 +22,10 @@ body {
 
 /* Utilities */
 .hidden { display: none !important; }
-.d-none { display: none !important; } /* Bootstrap helper enforcement */
+.d-none { display: none !important; } 
 .page-section { padding-top: 10px; animation: fadeIn 0.3s ease-in-out; }
 .fade-in { animation: fadeIn 0.5s ease-in-out; }
 
-/* Image Preview Fix */
 #p_PhotoPreview {
     display: block;
     margin-left: auto;
@@ -46,8 +45,9 @@ body {
    ========================================= */
 .navbar { 
     box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
-    background-color: var(--primary) !important; /* Enforce Brand Color */
+    background-color: var(--primary) !important; 
 }
+.navbar-brand { font-weight: 700; letter-spacing: 0.5px; }
 .nav-link { color: rgba(255, 255, 255, 0.8) !important; cursor: pointer; transition: 0.2s; }
 .nav-link:hover { color: #fff !important; }
 
@@ -56,10 +56,6 @@ body {
    ========================================= */
 .card { border: none; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
 .dashboard-card { background: #fff; border-radius: 8px; padding: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-
-/* Workflow Selection Buttons */
-.choice-btn { transition: transform 0.2s; }
-.choice-btn:hover { transform: translateY(-3px); }
 
 .step-number {
     background: var(--primary); color: white;
@@ -71,7 +67,27 @@ body {
 #statusArea { background: white; padding: 15px; border-radius: 6px; border: 1px solid #dee2e6; }
 
 /* =========================================
-   4. Drag & Drop Zones
+   4. Landing Page (Index) Cards
+   ========================================= */
+.tool-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+    border: 1px solid transparent;
+    height: 100%;
+}
+.tool-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    border-color: var(--primary);
+}
+.tool-icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    color: var(--primary);
+}
+
+/* =========================================
+   5. Drag & Drop Zones
    ========================================= */
 .drop-zone {
     border: 2px dashed #ccc;
@@ -85,7 +101,7 @@ body {
 }
 .drop-zone:hover, .drop-zone.dragover {
     border-color: var(--primary);
-    background: #eef5ff; /* Light blue tint on hover */
+    background: #eef5ff; 
 }
 .drop-zone.drop-success {
     border-color: #28a745;
@@ -95,37 +111,7 @@ body {
 .drop-zone p { margin: 0; color: #666; pointer-events: none; }
 
 /* =========================================
-   5. Tabs (Bootstrap Overrides)
-   ========================================= */
-
-.nav-tabs { 
-    border-bottom: 2px solid var(--primary); 
-}
-
-.nav-tabs .nav-link { 
-    color: var(--primary);            /* Blue text for inactive */
-    background-color: #e9ecef;        /* Light Gray background for inactive */
-    border: 1px solid #dee2e6;
-    border-bottom: none;
-    margin-right: 4px;
-    font-weight: 600;
-    transition: all 0.2s ease-in-out;
-}
-
-.nav-tabs .nav-link:hover {
-    background-color: #dee2e6;        /* Darker gray on hover */
-    color: var(--primary);
-}
-
-.nav-tabs .nav-link.active { 
-    color: #fff !important;           /* White text for active */
-    background-color: var(--primary) !important; /* Deep Blue background */
-    border-color: var(--primary);
-    border-bottom-color: var(--primary);
-}
-
-/* =========================================
-   6. Organization Manager Tables
+   6. Org Manager Tables & Views
    ========================================= */
 .org-table-wrapper {
     max-height: 65vh;
@@ -136,16 +122,14 @@ body {
     box-shadow: inset 0 0 5px rgba(0,0,0,0.02);
 }
 
-/* Custom Scrollbar for tables */
 .org-table-wrapper::-webkit-scrollbar { width: 8px; height: 8px; }
 .org-table-wrapper::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
 .org-table-wrapper::-webkit-scrollbar-thumb:hover { background: #999; }
 
-/* Sticky Headers */
 .org-table-wrapper thead th {
     position: sticky;
     top: 0;
-    background-color: #f8f9fa; /* Bootstrap light gray */
+    background-color: #f8f9fa;
     z-index: 5;
     box-shadow: 0 1px 2px rgba(0,0,0,0.05);
 }
@@ -156,7 +140,7 @@ th.sortable {
     user-select: none; 
     transition: background 0.2s, color 0.2s; 
     position: relative; 
-    padding-right: 25px !important; /* Space for arrow */
+    padding-right: 25px !important;
 }
 th.sortable:hover { 
     background-color: #e2e6ea !important; 
@@ -164,99 +148,79 @@ th.sortable:hover {
 }
 th.sortable::after { 
     content: '⇅'; 
-    position: absolute; 
-    right: 8px; 
-    top: 50%;
-    transform: translateY(-50%);
-    opacity: 0.3; 
-    font-size: 0.8em;
+    position: absolute; right: 8px; top: 50%;
+    transform: translateY(-50%); opacity: 0.3; font-size: 0.8em;
 }
 th.sortable.asc::after { content: '↑'; opacity: 1; color: var(--primary); }
 th.sortable.desc::after { content: '↓'; opacity: 1; color: var(--primary); }
 
-/* Table Action Icons */
+/* Icons */
 .action-icon { 
-    cursor: pointer; 
-    transition: all 0.2s ease; 
-    font-size: 1.1rem; 
-    display: inline-block;
+    cursor: pointer; transition: all 0.2s ease; 
+    font-size: 1.1rem; display: inline-block;
 }
 .action-icon:hover { transform: scale(1.2); }
-
 .delete-row { color: #dc3545; opacity: 0.7; }
 .delete-row:hover { opacity: 1; }
-
 .edit-row { color: var(--primary); opacity: 0.7; }
 .edit-row:hover { opacity: 1; }
 
 /* =========================================
-   7. Search Results (Autocomplete)
+   7. Org Viewer Specific (Moved from HTML)
    ========================================= */
-.search-container { position: relative; }
+.dept-sidebar {
+    height: calc(100vh - 160px);
+    overflow-y: auto;
+    border-right: 1px solid #dee2e6;
+}
+.dept-item {
+    cursor: pointer;
+    transition: background 0.1s;
+    border-radius: 4px;
+}
+.dept-item:hover { background-color: #f8f9fa; }
+.dept-item.active { background-color: #e7f1ff; border-left: 4px solid #0d6efd; }
 
+.member-list-wrapper {
+    height: calc(100vh - 220px);
+    overflow-y: auto;
+}
+
+/* =========================================
+   8. Search Results & Affiliations
+   ========================================= */
 #searchResults { 
-    position: absolute; 
-    top: 100%; left: 0; width: 100%; 
-    max-height: 250px; 
-    overflow-y: auto; 
-    background: white; 
-    border: 1px solid var(--border-color); 
-    z-index: 1050; 
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    border-radius: 0 0 6px 6px;
+    position: absolute; top: 100%; left: 0; width: 100%; 
+    max-height: 250px; overflow-y: auto; background: white; 
+    border: 1px solid var(--border-color); z-index: 1050; 
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 0 0 6px 6px;
 }
 .search-item { padding: 10px 15px; border-bottom: 1px solid #eee; cursor: pointer; transition: 0.1s; }
 .search-item:hover { background: #f0f8ff; color: var(--primary); }
 
-/* =========================================
-   8. Affiliation Grid (Person Manager)
-   ========================================= */
 .aff-row { 
-    display: flex;
-    flex-direction: column;
-    gap: 10px; 
-    margin-bottom: 12px; 
-    background: #fff; 
-    padding: 15px; 
-    border: 1px solid #eee; 
-    border-radius: 6px;
-    position: relative; 
+    display: flex; flex-direction: column; gap: 10px; 
+    margin-bottom: 12px; background: #fff; padding: 15px; 
+    border: 1px solid #eee; border-radius: 6px; position: relative; 
 }
 .aff-row:hover { border-color: #ccc; background-color: #fafafa; }
 .aff-row.warning-bg { background-color: var(--warning-bg) !important; border: 1px solid #ffeeba !important; }
 
-/* Custom Dropdowns (Org/Job) */
 .custom-dropdown-wrapper { position: relative; }
 .custom-dropdown-list {
-    position: absolute;
-    top: 100%; left: 0; right: 0;
-    max-height: 250px;
-    overflow-y: auto;
-    background: white;
-    border: 1px solid var(--primary);
-    border-top: none;
-    z-index: 9999;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-    display: none;
-    border-radius: 0 0 4px 4px;
+    position: absolute; top: 100%; left: 0; right: 0;
+    max-height: 250px; overflow-y: auto; background: white;
+    border: 1px solid var(--primary); border-top: none;
+    z-index: 9999; box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    display: none; border-radius: 0 0 4px 4px;
 }
 .custom-dropdown-header {
-    background: #f8f9fa;
-    color: #666;
-    font-size: 0.75rem;
-    font-weight: bold;
-    padding: 4px 10px;
-    border-bottom: 1px solid #eee;
+    background: #f8f9fa; color: #666; font-size: 0.75rem;
+    font-weight: bold; padding: 4px 10px; border-bottom: 1px solid #eee;
     text-transform: uppercase;
 }
 .custom-dropdown-item {
-    padding: 6px 10px;
-    font-size: 0.85rem;
-    cursor: pointer;
+    padding: 6px 10px; font-size: 0.85rem; cursor: pointer;
     border-bottom: 1px solid #f1f1f1;
 }
-.custom-dropdown-item:last-child { border-bottom: none; }
-.custom-dropdown-item:hover {
-    background-color: #eef5ff;
-    color: var(--primary);
-}
+.custom-dropdown-item:hover { background-color: #eef5ff; color: var(--primary); }

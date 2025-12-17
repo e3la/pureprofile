@@ -48,6 +48,17 @@ const ORG_APP = {
             });
         }
     },
+    
+    // --- NEW FUNCTION ADDED HERE ---
+    goHome: function() {
+        const hasChanges = (this.stagedHierAdd.length > 0 || this.stagedHierDel.size > 0 || this.stagedOrgEdits.size > 0);
+        if (hasChanges) {
+            const discard = confirm("You have unsaved changes! \n\nClick OK to DISCARD data and leave.\nClick Cancel to stay here and save.");
+            if (!discard) return; 
+        }
+        window.location.href = 'index.html';
+    },
+    // --------------------------------
 
     loadFile: async function(file) {
         const msg = document.getElementById('statusMsg');
@@ -607,10 +618,6 @@ const ORG_APP = {
 
         // Save
         XLSX.writeFile(this.wb, "Updated_Organisations_Masterlist.xlsx");
-        
-        // Optional: Clear staging? 
-        // this.stagedHierAdd = []; this.stagedHierDel.clear(); this.stagedOrgEdits.clear();
-        // this.render();
     }
 };
 

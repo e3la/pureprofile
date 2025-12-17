@@ -6,38 +6,17 @@
     
     <link href="bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <style>
-        .dept-sidebar {
-            height: calc(100vh - 160px);
-            overflow-y: auto;
-            border-right: 1px solid #dee2e6;
-        }
-        .dept-item {
-            cursor: pointer;
-            transition: background 0.1s;
-            border-radius: 4px;
-        }
-        .dept-item:hover { background-color: #f8f9fa; }
-        .dept-item.active { background-color: #e7f1ff; border-left: 4px solid #0d6efd; }
-        
-        .member-list-wrapper {
-            height: calc(100vh - 220px);
-            overflow-y: auto;
-        }
-    </style>
 </head>
 <body class="bg-light">
 
 <!-- NAVIGATION -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top mb-4 shadow-sm">
     <div class="container-fluid">
-        <a class="navbar-brand fw-bold" href="#">Organisation Viewer</a>
+        <a class="navbar-brand fw-bold" href="#" onclick="window.location.href='index.html'">Organisation Viewer</a>
         <div class="ms-auto d-flex gap-2">
-            <!-- NEW BUTTON FOR TEXT BLOB -->
             <button class="btn btn-warning btn-sm fw-bold text-dark" onclick="ORG_VIEWER.openBlobModal()">📄 Generate Global List</button>
             <div class="vr mx-2 text-white"></div>
-            <a href="index.html" class="btn btn-light btn-sm text-primary fw-bold">🏠 Person Manager</a>
-            <a href="org-hierarchy.html" class="btn btn-outline-light btn-sm">Hierarchy Tool</a>
+            <a href="index.html" class="btn btn-outline-light btn-sm">🏠 Dashboard</a>
         </div>
     </div>
 </nav>
@@ -54,7 +33,6 @@
                 <div id="dropZone" class="border rounded p-5 mb-3 bg-white" style="border: 2px dashed #0d6efd !important; cursor: pointer; transition: all 0.3s;">
                     <div style="font-size: 3rem;">📂</div>
                     <p class="mb-0 mt-2"><strong>Click</strong> or Drag Excel File Here</p>
-                    <!-- Removing d-none class for safety, using style to hide -->
                     <input type="file" id="fileInput" style="display:none;" accept=".xlsx, .xls">
                 </div>
                 <div id="statusMsg" class="badge bg-secondary fs-6 fw-normal px-3 py-2">Waiting for file...</div>

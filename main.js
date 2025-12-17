@@ -217,10 +217,10 @@ function checkUnlockStatus() {
 function goHome() {
     const hasChanges = (APP_STATE.stagedNewPersons.length > 0 || APP_STATE.stagedEdits.size > 0);
     if (hasChanges) {
-        const discard = confirm("You have unsaved changes! \n\nClick OK to DISCARD data and Reset.\nClick Cancel to stay here and save.");
+        const discard = confirm("You have unsaved changes! \n\nClick OK to DISCARD data and leave.\nClick Cancel to stay here and save.");
         if (!discard) return; 
     }
-    window.location.reload();
+    window.location.href = 'index.html';
 }
 
 function startPersonManager() {
