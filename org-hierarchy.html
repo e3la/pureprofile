@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hierarchy Manager</title>
+    
+    <link href="bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-light">
+
+<!-- NAVIGATION -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top mb-4 shadow-sm">
+    <div class="container-fluid">
+        <a class="navbar-brand fw-bold" href="#">Organisation Manager: Hierarchy</a>
+        <div class="ms-auto d-flex gap-2">
+            <a href="org-names.html" class="btn btn-outline-light btn-sm">Go to Name Editor</a>
+            <a href="index.html" class="btn btn-light btn-sm text-primary fw-bold">🏠 Person Manager</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid px-4">
+    
+    <!-- LOAD SCREEN -->
+    <div id="loadScreen" class="row mt-5">
+        <div class="col-lg-6 offset-lg-3">
+            <div class="card p-5 text-center shadow border-0">
+                <h3 class="mb-3 text-primary">Load Masterlist</h3>
+                <p class="text-muted">Upload the Excel file to manage Hierarchy Relationships.</p>
+                
+                <div id="dropZone" class="border rounded p-5 mb-3 bg-white" style="border: 2px dashed #0d6efd !important; cursor: pointer; transition: all 0.3s;">
+                    <div style="font-size: 3rem;">📂</div>
+                    <p class="mb-0 mt-2"><strong>Click</strong> or Drag Excel File Here</p>
+                    <input type="file" id="fileInput" class="d-none" accept=".xlsx, .xls">
+                </div>
+                <div id="statusMsg" class="badge bg-secondary fs-6 fw-normal px-3 py-2">Waiting for file...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN INTERFACE -->
+    <div id="mainTool" class="d-none">
+        
+        <!-- CONTROLS HEADER -->
+        <div class="card shadow-sm mb-3 border-0">
+            <div class="card-body py-2 d-flex justify-content-between align-items-center">
+                <div class="d-flex gap-4 align-items-center">
+                    <div class="form-check form-switch m-0">
+                        <input class="form-check-input" type="checkbox" id="toggleUUIDs" onchange="ORG_APP.render()">
+                        <label class="form-check-label fw-bold text-secondary small" for="toggleUUIDs">Show UUIDs</label>
+                    </div>
+                    <div class="form-check form-switch m-0 border-start ps-4 ms-2">
+                        <input class="form-check-input" type="checkbox" id="toggleRestricted" onchange="ORG_APP.render()">
+                        <label class="form-check-label fw-bold text-secondary small" for="toggleRestricted">Include Restricted Data</label>
+                    </div>
+                </div>
+                <button class="btn btn-success fw-bold btn-sm px-4" onclick="ORG_APP.download()">💾 Save & Download Excel</button>
+            </div>
+        </div>
+
+        <!-- HIERARCHY TOOL -->
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-lg-3 mb-3">
+                <div class="card p-3 bg-light border-0 shadow-sm sticky-top" style="top: 80px; z-index: 1;">
+                    <h6 class="card-title fw-bold text-primary mb-3">Add Relationship</h6>
+                    <div class="mb-3">
+                        <label class="small fw-bold text-muted">Parent Org</label>
+                        <input type="text" id="addParent" class="form-control form-control-sm" list="orgList" placeholder="Search Parent...">
+                    </div>
+                    <div class="mb-3">
+                        <label class="small fw-bold text-muted">Child Org</label>
+                        <input type="text" id="addChild" class="form-control form-control-sm" list="orgList" placeholder="Search Child...">
+                    </div>
+                    <button class="btn btn-primary btn-sm w-100" onclick="ORG_APP.addHierarchy()">➕ Stage Addition</button>
+                    <div id="addError" class="alert alert-danger p-2 mt-2 small d-none"></div>
+                </div>
+            </div>
+
+            <!-- Table -->
+            <div class="col-lg-9">
+                <!-- Staging Area -->
+                <div id="stagedHierArea" class="card mb-3 border-success d-none">
+                    <div class="card-header bg-success text-white fw-bold d-flex justify-content-between">
+                        <span>Staged Changes (<span id="stagedHierCount">0</span>)</span>
+                        <span class="small opacity-75">Click 'Save & Download' to commit</span>
+                    </div>
+                    <div class="card-body p-0">
+                        <table class="table table-sm mb-0">
+                            <thead class="table-light"><tr><th>Parent</th><th>Child</th><th class="text-end">Action</th></tr></thead>
+                            <tbody id="stagedHierBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Main Table -->
+                <div class="org-table-wrapper bg-white shadow-sm">
+                    <table class="table table-hover table-sm mb-0 align-middle table-striped">
+                        <thead class="table-light sticky-top" style="z-index: 5;">
+                            <tr>
+                                <th class="sortable" onclick="ORG_APP.sortHier('parent', this)">Parent Organisation</th>
+                                <th class="sortable" onclick="ORG_APP.sortHier('child', this)">Child Organisation</th>
+                                <th class="text-end" style="width: 80px;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="hierBody"></tbody>
+                    </table>
+                </div>
+                <div class="d-flex justify-content-between mt-2">
+                    <span class="text-muted small" id="hierCount">0 rows</span>
+                    <span class="text-muted small fst-italic">Click headers to sort</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<datalist id="orgList"></datalist>
+
+<script src="bootstrap.bundle.min.js"></script>
+<script src="xlsx.full.min.js"></script>
+<script src="FileSaver.min.js"></script>
+<script src="org-manager.js"></script>
+
+</body>
+</html>

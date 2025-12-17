@@ -2,7 +2,7 @@
    1. Global Variables & Reset
    ========================================= */
 :root {
-    --primary: #003366;  /* Deep Blue */
+    --primary: #003366;  /* Deep Blue (UMSL/Pure Theme) */
     --accent: #dca205;   /* Gold/Yellow */
     --bg-color: #f4f6f9;
     --border-color: #dee2e6;
@@ -22,6 +22,7 @@ body {
 
 /* Utilities */
 .hidden { display: none !important; }
+.d-none { display: none !important; } /* Bootstrap helper enforcement */
 .page-section { padding-top: 10px; animation: fadeIn 0.3s ease-in-out; }
 .fade-in { animation: fadeIn 0.5s ease-in-out; }
 
@@ -43,7 +44,10 @@ body {
 /* =========================================
    2. Navigation
    ========================================= */
-.navbar { box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+.navbar { 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+    background-color: var(--primary) !important; /* Enforce Brand Color */
+}
 .nav-link { color: rgba(255, 255, 255, 0.8) !important; cursor: pointer; transition: 0.2s; }
 .nav-link:hover { color: #fff !important; }
 
@@ -81,7 +85,7 @@ body {
 }
 .drop-zone:hover, .drop-zone.dragover {
     border-color: var(--primary);
-    background: #e9ecef;
+    background: #eef5ff; /* Light blue tint on hover */
 }
 .drop-zone.drop-success {
     border-color: #28a745;
@@ -91,7 +95,102 @@ body {
 .drop-zone p { margin: 0; color: #666; pointer-events: none; }
 
 /* =========================================
-   5. Search Results (Autocomplete)
+   5. Tabs (Bootstrap Overrides)
+   ========================================= */
+
+.nav-tabs { 
+    border-bottom: 2px solid var(--primary); 
+}
+
+.nav-tabs .nav-link { 
+    color: var(--primary);            /* Blue text for inactive */
+    background-color: #e9ecef;        /* Light Gray background for inactive */
+    border: 1px solid #dee2e6;
+    border-bottom: none;
+    margin-right: 4px;
+    font-weight: 600;
+    transition: all 0.2s ease-in-out;
+}
+
+.nav-tabs .nav-link:hover {
+    background-color: #dee2e6;        /* Darker gray on hover */
+    color: var(--primary);
+}
+
+.nav-tabs .nav-link.active { 
+    color: #fff !important;           /* White text for active */
+    background-color: var(--primary) !important; /* Deep Blue background */
+    border-color: var(--primary);
+    border-bottom-color: var(--primary);
+}
+
+/* =========================================
+   6. Organization Manager Tables
+   ========================================= */
+.org-table-wrapper {
+    max-height: 65vh;
+    overflow-y: auto;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background: white;
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.02);
+}
+
+/* Custom Scrollbar for tables */
+.org-table-wrapper::-webkit-scrollbar { width: 8px; height: 8px; }
+.org-table-wrapper::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
+.org-table-wrapper::-webkit-scrollbar-thumb:hover { background: #999; }
+
+/* Sticky Headers */
+.org-table-wrapper thead th {
+    position: sticky;
+    top: 0;
+    background-color: #f8f9fa; /* Bootstrap light gray */
+    z-index: 5;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+/* Sortable Headers */
+th.sortable { 
+    cursor: pointer; 
+    user-select: none; 
+    transition: background 0.2s, color 0.2s; 
+    position: relative; 
+    padding-right: 25px !important; /* Space for arrow */
+}
+th.sortable:hover { 
+    background-color: #e2e6ea !important; 
+    color: var(--primary);
+}
+th.sortable::after { 
+    content: '⇅'; 
+    position: absolute; 
+    right: 8px; 
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.3; 
+    font-size: 0.8em;
+}
+th.sortable.asc::after { content: '↑'; opacity: 1; color: var(--primary); }
+th.sortable.desc::after { content: '↓'; opacity: 1; color: var(--primary); }
+
+/* Table Action Icons */
+.action-icon { 
+    cursor: pointer; 
+    transition: all 0.2s ease; 
+    font-size: 1.1rem; 
+    display: inline-block;
+}
+.action-icon:hover { transform: scale(1.2); }
+
+.delete-row { color: #dc3545; opacity: 0.7; }
+.delete-row:hover { opacity: 1; }
+
+.edit-row { color: var(--primary); opacity: 0.7; }
+.edit-row:hover { opacity: 1; }
+
+/* =========================================
+   7. Search Results (Autocomplete)
    ========================================= */
 .search-container { position: relative; }
 
@@ -110,7 +209,7 @@ body {
 .search-item:hover { background: #f0f8ff; color: var(--primary); }
 
 /* =========================================
-   6. Affiliation Grid
+   8. Affiliation Grid (Person Manager)
    ========================================= */
 .aff-row { 
     display: flex;
@@ -124,51 +223,21 @@ body {
     position: relative; 
 }
 .aff-row:hover { border-color: #ccc; background-color: #fafafa; }
+.aff-row.warning-bg { background-color: var(--warning-bg) !important; border: 1px solid #ffeeba !important; }
 
-.aff-row.warning-bg {
-    background-color: #fff3cd !important;
-    border: 1px solid #ffeeba !important;
-}
-
-/* Styles for the top row (Employed As / Start Date) */
-.aff-row-top-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    padding-right: 30px; /* Make space for the remove button */
-}
-
-/* Style for the remove 'X' button */
-.aff-row-remove-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-}
-
-/* A consistent style for the new labels */
-.aff-row-label {
-    display: block;
-    font-size: 0.8rem;
-    font-weight: bold;
-    color: #6c757d; /* Bootstrap's text-muted color */
-    margin-bottom: 4px;
-}
-
-/* GENERIC CUSTOM DROPDOWN STYLES */
-.custom-dropdown-wrapper {
-    position: relative;
-}
+/* Custom Dropdowns (Org/Job) */
+.custom-dropdown-wrapper { position: relative; }
 .custom-dropdown-list {
     position: absolute;
     top: 100%; left: 0; right: 0;
     max-height: 250px;
     overflow-y: auto;
     background: white;
-    border: 1px solid #003366;
+    border: 1px solid var(--primary);
     border-top: none;
     z-index: 9999;
     box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-    display: none; /* Toggled via JS */
+    display: none;
     border-radius: 0 0 4px 4px;
 }
 .custom-dropdown-header {
@@ -179,7 +248,6 @@ body {
     padding: 4px 10px;
     border-bottom: 1px solid #eee;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
 }
 .custom-dropdown-item {
     padding: 6px 10px;
@@ -190,5 +258,5 @@ body {
 .custom-dropdown-item:last-child { border-bottom: none; }
 .custom-dropdown-item:hover {
     background-color: #eef5ff;
-    color: #003366;
+    color: var(--primary);
 }
