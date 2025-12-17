@@ -12,7 +12,7 @@ const ORG_VIEWER = {
     rawOrgs: [],
 
     // Processed Data
-    deptMap: new Map(), // Map<OrgID, { name: string, members: Array }>
+    deptMap: new Map(), // Map<OrgID, { name: string, vis: string, members: Array }>
     pMap: new Map(),    // Map<PersonID, { first, last, name, email }>
     sortedDeptIds: [],
 
@@ -109,6 +109,7 @@ const ORG_VIEWER = {
                 this.deptMap.set(o.OrganisationID, {
                     id: o.OrganisationID,
                     name: o.Name_en || o.Name || o.OrganisationID,
+                    vis: (o.Visibility || 'Public').toLowerCase(),
                     members: []
                 });
             }
@@ -148,19 +149,34 @@ const ORG_VIEWER = {
         const container = document.getElementById('deptList');
         const filter = document.getElementById('searchDepts').value.toLowerCase();
         
+        // Get Settings
+        const toggleUUID = document.getElementById('toggleUUIDs');
+        const showUUIDs = toggleUUID ? toggleUUID.checked : false;
+        
+        const toggleRest = document.getElementById('toggleRestricted');
+        const includeRestricted = toggleRest ? toggleRest.checked : false;
+
         container.innerHTML = '';
 
         this.sortedDeptIds.forEach(id => {
             const dept = this.deptMap.get(id);
+            
+            // Filter by Visibility
+            if(!includeRestricted && dept.vis === 'restricted') return;
+
+            // Filter by Search Text
             const match = dept.name.toLowerCase().includes(filter) || id.toLowerCase().includes(filter);
             
             if(match) {
                 const count = dept.members.length;
+                let displayName = dept.name;
+                if(showUUIDs) displayName = `${dept.name} [${dept.id}]`;
+
                 const div = document.createElement('div');
                 div.className = `dept-item p-2 d-flex justify-content-between align-items-center ${this.currentDeptId === id ? 'active' : ''}`;
                 div.onclick = () => this.selectDept(id);
                 div.innerHTML = `
-                    <div class="text-truncate me-2" style="font-size:0.9rem; font-weight:500;">${dept.name}</div>
+                    <div class="text-truncate me-2" style="font-size:0.9rem; font-weight:500;" title="${displayName}">${displayName}</div>
                     <span class="badge bg-secondary rounded-pill" style="font-size:0.7rem;">${count}</span>
                 `;
                 container.appendChild(div);

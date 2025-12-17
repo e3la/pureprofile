@@ -42,6 +42,23 @@
 
     <!-- MAIN INTERFACE -->
     <div id="mainTool" class="d-none">
+        
+        <!-- NEW CONTROLS TOOLBAR -->
+        <div class="card shadow-sm mb-3 border-0">
+            <div class="card-body py-2 d-flex justify-content-between align-items-center">
+                <div class="d-flex gap-4 align-items-center">
+                    <div class="form-check form-switch m-0">
+                        <input class="form-check-input" type="checkbox" id="toggleUUIDs" onchange="ORG_VIEWER.renderSidebar()">
+                        <label class="form-check-label fw-bold text-secondary small" for="toggleUUIDs">Show UUIDs</label>
+                    </div>
+                    <div class="form-check form-switch m-0 border-start ps-4 ms-2">
+                        <input class="form-check-input" type="checkbox" id="toggleRestricted" onchange="ORG_VIEWER.renderSidebar()">
+                        <label class="form-check-label fw-bold text-secondary small" for="toggleRestricted">Include Restricted Data</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <div class="card shadow-sm border-0" style="min-height: 80vh;">
             <div class="card-body p-0">
                 <div class="row g-0 h-100">
