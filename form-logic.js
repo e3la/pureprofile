@@ -15,7 +15,7 @@ function generateID() {
     const warn = document.getElementById('idWarning');
     if(existsInExcel || existsInStaging) {
         warn.classList.remove('hidden');
-        warn.innerText = "ID already exists! Please modify name or ID manually.";
+        warn.innerText = "ID ALREADY EXISTS! Please modify name or ID manually.";
     } else {
         warn.classList.add('hidden');
     }
@@ -192,24 +192,27 @@ function addAffiliationRow(data = null) {
     const jobVal = data ? data.job : DEFAULT_JOB;
     const startVal = (data && data.start) ? data.start : todayStr;
 
+    // Fixed: Arrows replaced with 'v' and Remove button with '[X]' or '&times;'
     div.innerHTML = `
         <div class="custom-dropdown-wrapper">
             <div class="input-group input-group-sm">
                 <input type="text" class="form-control inp-org" value="${orgVal}" placeholder="Search Org..." autocomplete="off">
-                <button class="btn btn-outline-secondary btn-org-arrow" type="button" tabindex="-1" style="border-left:0;">&#9660;</button>
+                <button class="btn btn-outline-secondary btn-org-arrow" type="button" tabindex="-1" style="border-left:0;">v</button>
             </div>
             <div class="custom-dropdown-list org-list"></div>
         </div>
         <div class="custom-dropdown-wrapper">
             <div class="input-group input-group-sm">
                 <input type="text" class="form-control inp-job" value="${jobVal}" placeholder="Job Description" autocomplete="off">
-                <button class="btn btn-outline-secondary btn-job-arrow" type="button" tabindex="-1" style="border-left:0;">â–¼</button>
+                <button class="btn btn-outline-secondary btn-job-arrow" type="button" tabindex="-1" style="border-left:0;">v</button>
             </div>
             <div class="custom-dropdown-list job-list"></div>
         </div>
         <div><select class="form-select form-select-sm inp-emp">${opts}</select></div>
         <div><input type="text" class="form-control form-control-sm inp-start" value="${startVal}" placeholder="dd-mm-yyyy"></div>
-        <div class="text-center"><button class="btn btn-outline-danger btn-sm rounded-circle" onclick="this.closest('.aff-row').remove()">&times;</button></div>
+        <div class="text-center">
+            <button class="btn btn-outline-danger btn-sm rounded-circle" onclick="this.closest('.aff-row').remove()" title="Remove">X</button>
+        </div>
     `;
     
     document.getElementById('affRows').appendChild(div);

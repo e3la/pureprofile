@@ -100,28 +100,22 @@ function resetEditor(fullReset = true) {
 
 function generateID() {
     if(APP_STATE.currentMode !== 'add') return;
-    
     const first = document.getElementById('p_Firstname').value.trim().toLowerCase();
     const last = document.getElementById('p_Lastname').value.trim().toLowerCase();
-    
     if(!first && !last) {
         document.getElementById('p_PersonID').value = '';
         document.getElementById('idWarning').classList.add('hidden');
         return;
     }
-    
     let rawID = `${first}-${last}`;
     const id = rawID.replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
-    
     document.getElementById('p_PersonID').value = id;
-    
     const existsInExcel = APP_STATE.rawPersons.some(p => p.PersonID === id);
     const existsInStaging = APP_STATE.stagedNewPersons.some(item => item.person.PersonID === id);
-    
     const warn = document.getElementById('idWarning');
     if(existsInExcel || existsInStaging) {
         warn.classList.remove('hidden');
-        warn.innerText = "ID already exists! Please modify name or ID manually.";
+        warn.innerText = "ID ALREADY EXISTS! Please modify name or ID manually.";
     } else {
         warn.classList.add('hidden');
     }
@@ -288,16 +282,12 @@ function loadStagedForEdit(type, key) {
 function addAffiliationRow(data = null) {
     const defOrgName = "University of Missouri-St. Louis";
     const defOrgId = "e08c2356-15e4-4158-9cfe-34aecbd227e6";
-    
-    // Safety check for APP_STATE.settings
     let showUUIDs = false;
     if (typeof APP_STATE !== 'undefined' && APP_STATE.settings) {
         showUUIDs = APP_STATE.settings.showUUIDs;
     }
-
     let defaultOrgStr = defOrgName;
     if(showUUIDs) defaultOrgStr = `${defOrgName} [${defOrgId}]`;
-
     const DEFAULT_JOB = ""; 
     const DEFAULT_EMP = "faculty";
 
@@ -313,27 +303,27 @@ function addAffiliationRow(data = null) {
     const jobVal = data ? data.job : DEFAULT_JOB;
     const startVal = (data && data.start) ? data.start : todayStr;
 
-    // CUSTOM DROPDOWN HTML STRUCTURE
+    // Fixed: Arrows replaced with 'v' and Remove button with '[X]' or '&times;'
     div.innerHTML = `
         <div class="custom-dropdown-wrapper">
             <div class="input-group input-group-sm">
                 <input type="text" class="form-control inp-org" value="${orgVal}" placeholder="Search Org..." autocomplete="off">
-                <button class="btn btn-outline-secondary btn-org-arrow" type="button" tabindex="-1" style="border-left:0;">&#9660;</button>
+                <button class="btn btn-outline-secondary btn-org-arrow" type="button" tabindex="-1" style="border-left:0;">v</button>
             </div>
             <div class="custom-dropdown-list org-list"></div>
         </div>
-        
         <div class="custom-dropdown-wrapper">
             <div class="input-group input-group-sm">
                 <input type="text" class="form-control inp-job" value="${jobVal}" placeholder="Job Description" autocomplete="off">
-                <button class="btn btn-outline-secondary btn-job-arrow" type="button" tabindex="-1" style="border-left:0;">&#9660;</button>
+                <button class="btn btn-outline-secondary btn-job-arrow" type="button" tabindex="-1" style="border-left:0;">v</button>
             </div>
             <div class="custom-dropdown-list job-list"></div>
         </div>
-        
         <div><select class="form-select form-select-sm inp-emp">${opts}</select></div>
         <div><input type="text" class="form-control form-control-sm inp-start" value="${startVal}" placeholder="dd-mm-yyyy"></div>
-        <div class="text-center"><button class="btn btn-outline-danger btn-sm rounded-circle" onclick="this.closest('.aff-row').remove()">&times;</button></div>
+        <div class="text-center">
+            <button class="btn btn-outline-danger btn-sm rounded-circle" onclick="this.closest('.aff-row').remove()" title="Remove">X</button>
+        </div>
     `;
     
     document.getElementById('affRows').appendChild(div);
